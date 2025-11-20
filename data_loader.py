@@ -84,28 +84,24 @@ class FakeNewsDataset(Dataset):
 
         if torch.is_tensor(idx):
             idx = idx.tolist()
-        
-        img_name = self.root_dir + self.csv_data['image_id'][idx] + '.jpg'
+
+        # ---- CORRECTED PATH ----
+        img_name = os.path.join(self.root_dir, self.csv_data['image_id'][idx] + '.jpg')
+
         image = Image.open(img_name).convert("RGB")
         image = self.image_transform(image)
-        
+
         text = self.csv_data['post_text'][idx]
         tensor_input_id, tensor_input_mask = self.pre_processing_BERT(text)
 
         label = self.csv_data['label'][idx]
-
-        if label == 'fake':
-            label = '1'
-        else:
-            label = '0'
-        label = int(label)
-        
-        label = torch.tensor(label)
+        label = 1 if label == 'fake' else 0
+        label = torch.tensor(label, dtype=torch.long)
 
         sample = {
-                  'image_id'  :  image, 
-                  'BERT_ip'   : [tensor_input_id, tensor_input_mask],
-                  'label'     :  label
-                  }
+            'image_id': image,
+            'BERT_ip': [tensor_input_id, tensor_input_mask],
+            'label': label
+        }
 
         return sample

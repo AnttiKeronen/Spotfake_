@@ -11,7 +11,9 @@ from transformers import BertTokenizer
 import torch.nn as nn
 import torch.nn.functional as F
 from transformers import BertModel
-from transformers import AdamW, get_linear_schedule_with_warmup
+from torch.optim import AdamW
+from transformers import get_linear_schedule_with_warmup
+
 import random
 import time
 import os

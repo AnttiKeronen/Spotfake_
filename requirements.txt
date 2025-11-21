@@ -1,0 +1,14 @@
+torch
+torchvision
+transformers
+numpy
+pandas
+scikit-learn
+nltk
+beautifulsoup4
+newspaper3k
+requests
+tqdm
+lxml
+importlib-metadata
+

@@ -23,10 +23,10 @@ from train_val import *
 
 # ========== WINDOWS PATHS ==========
 
-root_dir = r"C:\Users\keron\OneDrive\Työpöytä\SpotFakefull\twitter"
+root_dir = r"C:\Users\lauri\Desktop\Spotfake_\twitter"
 
-df_train = pd.read_csv(root_dir + r"\train_posts_clean.csv")
-df_test = pd.read_csv(root_dir + r"\test_posts.csv")
+df_train = pd.read_csv(os.path.join(root_dir, "train_posts_clean.csv"))
+df_test = pd.read_csv(os.path.join(root_dir, "test_posts.csv"))
 
 # ========== DEVICE ==========
 if torch.cuda.is_available():
@@ -51,7 +51,6 @@ tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=Tru
 MAX_LEN = 500
 
 # ========== DATASETS ==========
-# FIX APPLIED ↓↓↓ (slash corrected)
 train_dataset = FakeNewsDataset(
     df_train,
     os.path.join(root_dir, "images_train"),
@@ -120,7 +119,9 @@ scheduler = get_linear_schedule_with_warmup(
 )
 
 # ========== TENSORBOARD ==========
-writer = SummaryWriter(r"C:\Users\keron\OneDrive\Työpöytä\SpotFakefull\runs\multi_att_exp3")
+writer = SummaryWriter(
+    r"C:\Users\lauri\Desktop\Spotfake_\runs\multi_att_exp3"
+)
 
 # ========== TRAINING ==========
 train(
@@ -136,7 +137,6 @@ train(
     param_dict_model=parameter_dict_model,
     param_dict_opt=parameter_dict_opt,
     save_best=True,
-    file_path=r"C:\Users\keron\OneDrive\Työpöytä\SpotFakefull\saved_models\best_model.pt",
+    file_path=r"C:\Users\lauri\Desktop\Spotfake_\saved_models\best_model.pt",
     writer=writer
 )
-
